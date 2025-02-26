@@ -33,7 +33,7 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
     configuration: {
       ingress: {
         external: true
-        targetPort: 80
+        targetPort: 8080
       }
       registries: [
         {
@@ -56,6 +56,16 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
       scale: {
         minReplicas: 0
         maxReplicas: 5
+        rules: [
+          {
+            name: 'http-rule'
+            http: {
+              metadata: {
+                concurrentRequests: '2'
+              }
+            }
+          }
+        ]
       }
     }
   }

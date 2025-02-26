@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 8080
 
 # Run the app
 ENTRYPOINT ["dotnet", "HttpScaling.dll"]
