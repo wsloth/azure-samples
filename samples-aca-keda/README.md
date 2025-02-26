@@ -55,3 +55,11 @@ az deployment group create \
         containerAppName='ca-keda-httpscaling' \
         dockerImageName='httpscaling:latest'
 ```
+
+You can verify the HTTP Scaling works by running a simple loadtest against the app:
+
+```bash
+hey -c 10 -z 2m https://ca-keda-httpscaling.<your-containerapp>.<region>.azurecontainerapps.io/weatherforecast
+```
+
+It should pretty much directly scale up to 5 instances and then scale down to 1 instance again after a few minutes when you stop the test.
