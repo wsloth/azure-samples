@@ -1,6 +1,0 @@
-@HttpScaling_HostAddress = http://localhost:5028
-
-GET {{HttpScaling_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

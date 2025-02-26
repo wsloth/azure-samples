@@ -35,6 +35,7 @@ Set the following environment variables:
 
 ```bash
 export LOCATION=germanywestcentral
+export RESOURCE_GROUP_NAME=rg-aca-keda
 export CONTAINER_REGISTRY_NAME=acrkedascaling.azurecr.io
 export ENVIRONMENT_NAME=cae-keda
 export ACR_PULL_IDENTITY_NAME='acr-pull'
@@ -46,7 +47,7 @@ Deploy the container app with the following command:
 ```bash
 az deployment group create \
     --name httpscaling-$(date +%Y%m%d-%H%M%S) \
-    --resource-group rg-aca-keda \
+    --resource-group $RESOURCE_GROUP_NAME \
     --template-file ./01-httpscaling/main.bicep \
     --parameters location=$LOCATION \
         containerRegistryName=$CONTAINER_REGISTRY_NAME \
@@ -63,3 +64,23 @@ hey -c 10 -z 2m https://ca-keda-httpscaling.<your-containerapp>.<region>.azureco
 ```
 
 It should pretty much directly scale up to 5 instances and then scale down to 1 instance again after a few minutes when you stop the test.
+
+# Deploying 02-servicebus
+
+First, deploy the infrastructure and container app:
+
+```bash
+az deployment group create \
+    --name servicebusscaling-$(date +%Y%m%d-%H%M%S) \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --template-file ./02-servicebus/main.bicep \
+    --parameters location=$LOCATION \
+        containerRegistryName=$CONTAINER_REGISTRY_NAME \
+        environmentName=$ENVIRONMENT_NAME \
+        acrPullIdentityName=$ACR_PULL_IDENTITY_NAME \
+        containerAppName='ca-keda-servicebusscaling' \
+        dockerImageName='servicebusscaling:latest' \
+        serviceBusNamespace='sb-aca-keda-demo'
+```
+
+You can verify the Service Bus scaling works by sending messages to the topic using the UI in the portal. The container app should scale based on the number of messages in the subscription. When the messages are processed, it will scale back down to 0.
