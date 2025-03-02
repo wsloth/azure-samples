@@ -54,7 +54,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
 
 // Role assignment for Service Bus access
 resource serviceBusRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(resourceGroup().id, containerApp.id, 'Azure Service Bus Data Receiver')
+  name: guid(serviceBus.id, containerApp.id, 'Azure Service Bus Data Receiver')
   properties: {
     principalId: containerApp.identity.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0') // Azure Service Bus Data Receiver
@@ -63,7 +63,7 @@ resource serviceBusRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-
 }
 
 // Container App
-resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = { // Latest preview API allows you to set the identity for the scale rule
   name: containerAppName
   location: location
   identity: {
@@ -94,7 +94,7 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
           env: [
             {
               name: 'ServiceBus__ConnectionString'
-              value: '${serviceBus.name}.servicebus.windows.net'
+                value: '${serviceBus.name}.servicebus.windows.net'
             }
             {
               name: 'ServiceBus__TopicName'
@@ -113,23 +113,19 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
       ]
       scale: {
         minReplicas: 0
-        maxReplicas: 5
+        maxReplicas: 15
         rules: [
           {
             name: 'service-bus-scale-rule'
             custom: {
               type: 'azure-servicebus'
               metadata: {
+                namespace: serviceBusNamespace
                 topicName: topicName
                 subscriptionName: subscriptionName
-                messageCount: '2'
+                messageCount: '10' // Scale up when there are >10 messages in the queue
               }
-              auth: [
-                {
-                  triggerParameter: 'connection'
-                  secretRef: 'servicebusconnection'
-                }
-              ]
+              identity: 'system' // Use system-assigned identity to access the Service Bus
             }
           }
         ]

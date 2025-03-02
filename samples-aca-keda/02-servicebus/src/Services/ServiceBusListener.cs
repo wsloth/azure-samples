@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 
 namespace ServiceBusScaling.Services;
@@ -16,7 +17,7 @@ public class ServiceBusListener : BackgroundService
         var topicName = configuration["ServiceBus:TopicName"];
         var subscriptionName = configuration["ServiceBus:SubscriptionName"];
 
-        _client = new ServiceBusClient(connectionString);
+        _client = new ServiceBusClient(connectionString, new DefaultAzureCredential()); // Important: Use Managed Identity credential
         _processor = _client.CreateProcessor(topicName, subscriptionName);
     }
 
