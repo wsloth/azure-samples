@@ -1,0 +1,94 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScalableService", "05-custom\src-scalableservice\ScalableService.csproj", "{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScalingSource", "05-custom\src-scalingsource\ScalingSource.csproj", "{E8C359A8-B51D-4F4E-9461-962815C047B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-custom", "05-custom", "{86B59B37-3D47-4446-958F-BA9F43AC1419}"
+	ProjectSection(SolutionItems) = preProject
+		05-custom\Dockerfile.ScalableService = 05-custom\Dockerfile.ScalableService
+		05-custom\Dockerfile.ScalingSource = 05-custom\Dockerfile.ScalingSource
+		05-custom\ExternalScaler.proto = 05-custom\ExternalScaler.proto
+		05-custom\main.bicep = 05-custom\main.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-http", "01-http", "{86E61A47-9D29-4350-8801-7B41FF2DF241}"
+	ProjectSection(SolutionItems) = preProject
+		01-http\Dockerfile = 01-http\Dockerfile
+		01-http\main.bicep = 01-http\main.bicep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpScaling", "01-http\src\HttpScaling.csproj", "{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-servicebus", "02-servicebus", "{E80A4EC3-93A8-4300-B8EF-A9AECE6B6C66}"
+	ProjectSection(SolutionItems) = preProject
+		02-servicebus\Dockerfile = 02-servicebus\Dockerfile
+		02-servicebus\main.bicep = 02-servicebus\main.bicep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusScaling", "02-servicebus\src\ServiceBusScaling.csproj", "{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-blobstorage", "03-blobstorage", "{5D954BBD-A0B7-4703-A9F8-17EFE23C770C}"
+	ProjectSection(SolutionItems) = preProject
+		03-blobstorage\Dockerfile = 03-blobstorage\Dockerfile
+		03-blobstorage\main.bicep = 03-blobstorage\main.bicep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobStorageScaling", "03-blobstorage\src\BlobStorageScaling.csproj", "{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-cron", "04-cron", "{7DDD2CE9-688A-4966-A959-62B3020D0F70}"
+	ProjectSection(SolutionItems) = preProject
+		04-cron\Dockerfile = 04-cron\Dockerfile
+		04-cron\main.bicep = 04-cron\main.bicep
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CronScaling", "04-cron\src\CronScaling.csproj", "{37248B37-0ADD-44A2-AF19-A54C8DCA9E50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8C359A8-B51D-4F4E-9461-962815C047B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8C359A8-B51D-4F4E-9461-962815C047B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8C359A8-B51D-4F4E-9461-962815C047B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8C359A8-B51D-4F4E-9461-962815C047B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37248B37-0ADD-44A2-AF19-A54C8DCA9E50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37248B37-0ADD-44A2-AF19-A54C8DCA9E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37248B37-0ADD-44A2-AF19-A54C8DCA9E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37248B37-0ADD-44A2-AF19-A54C8DCA9E50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{027AF6E3-8D8F-49C1-9EE9-BC045E47A5DA} = {86B59B37-3D47-4446-958F-BA9F43AC1419}
+		{E8C359A8-B51D-4F4E-9461-962815C047B7} = {86B59B37-3D47-4446-958F-BA9F43AC1419}
+		{45679F8D-A7D5-4B1F-A3A0-B76D78F08A09} = {86E61A47-9D29-4350-8801-7B41FF2DF241}
+		{4EB2BC4E-AF08-492A-9F10-AE2B25B94D4F} = {E80A4EC3-93A8-4300-B8EF-A9AECE6B6C66}
+		{24CD83C5-4B0B-46FA-B1CB-CC72CA77E2EB} = {5D954BBD-A0B7-4703-A9F8-17EFE23C770C}
+		{37248B37-0ADD-44A2-AF19-A54C8DCA9E50} = {7DDD2CE9-688A-4966-A959-62B3020D0F70}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B6F3945-6925-440F-96AB-6552BBA1672A}
+	EndGlobalSection
+EndGlobal

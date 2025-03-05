@@ -134,5 +134,31 @@ You can verify the scheduling works by:
 hey -c 10 -z 2m https://ca-keda-cronscaling.<your-containerapp>.<region>.azurecontainerapps.io/weatherforecast
 ```
 
+# Deploying 05-custom
 
+This sample demonstrates how to build and deploy custom scaling sources.
+It includes deploying two services:
+- A custom scaling source that generates metrics between 0 and 200
+- A custom scalable service that scales based on the metrics from the scaling source
+
+To build the custom scaling source and service, run the following commands:
+- Scaling Source: `docker build --platform linux/amd64 -t custom-scalingsource:latest -f ./05-custom/Dockerfile.ScalingSource ./05-custom --no-cache`
+- Scalable Service: `docker build --platform linux/amd64 -t custom-scalableservice:latest -f ./05-custom/Dockerfile.ScalableService ./05-custom --no-cache`
+
+Deploy the infrastructure and container apps:
+
+```bash
+az deployment group create \
+    --name customscaling-$(date +%Y%m%d-%H%M%S) \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --template-file ./05-custom/main.bicep \
+    --parameters location=$LOCATION \
+        containerRegistryName=$CONTAINER_REGISTRY_NAME \
+        environmentName=$ENVIRONMENT_NAME \
+        acrPullIdentityName=$ACR_PULL_IDENTITY_NAME \
+        scalingSourceContainerAppName='ca-keda-custom-scalingsource' \
+        scalingSourceDockerImageName='custom-scalingsource:latest' \
+        scalableServiceContainerAppName='ca-keda-custom-scalableservice' \
+        scalableServiceDockerImageName='custom-scalableservice:latest'
+```
 

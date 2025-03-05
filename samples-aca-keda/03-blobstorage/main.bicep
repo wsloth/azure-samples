@@ -34,7 +34,7 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' 
   name: environmentName
 }
 
-// Managed Identity
+// Managed Identity for pulling images from ACR
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: acrPullIdentityName
 }

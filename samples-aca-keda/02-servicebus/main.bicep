@@ -47,7 +47,7 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-05-01' 
   name: environmentName
 }
 
-// Managed Identity
+// Managed Identity for pulling images from ACR
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
   name: acrPullIdentityName
 }
@@ -63,7 +63,7 @@ resource serviceBusRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-
 }
 
 // Container App
-resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = { // Latest preview API allows you to set the identity for the scale rule
+resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
   name: containerAppName
   location: location
   identity: {
