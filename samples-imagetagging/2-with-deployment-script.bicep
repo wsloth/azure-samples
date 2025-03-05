@@ -75,7 +75,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
 
 output currentImageTag string = deploymentScript.properties.outputs.tag
 
-resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource containerApp 'Microsoft.App/containerApps@2024-10-02-preview' = {
   name: appName
   location: location
   properties: {
