@@ -1,7 +1,7 @@
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-namespace ServiceBusScaling.Services;
+namespace BlobStorageScaling.Services;
 
 public class BlobStorageListener : BackgroundService
 {

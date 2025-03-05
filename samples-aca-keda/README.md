@@ -105,5 +105,34 @@ az deployment group create \
 
 You can verify the Blob Storage scaling works by uploading files to the 'samples' container in the storage account. The container app will "process" these files and delete them afterwards. When there are no more files to process, it will scale back down to 0 after a few minutes.
 
+# Deploying 04-cron
+
+Deploy the container app with the following command:
+
+```bash
+az deployment group create \
+    --name cronscaling-$(date +%Y%m%d-%H%M%S) \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --template-file ./04-cron/main.bicep \
+    --parameters location=$LOCATION \
+        containerRegistryName=$CONTAINER_REGISTRY_NAME \
+        environmentName=$ENVIRONMENT_NAME \
+        acrPullIdentityName=$ACR_PULL_IDENTITY_NAME \
+        containerAppName='ca-keda-cronscaling' \
+        dockerImageName='cronscaling:latest'
+```
+
+This sample demonstrates scaling based on a cron schedule. The container app will:
+- Scale to 1 replica during business hours (8 AM - 6 PM, Monday-Friday, Europe/Amsterdam timezone)
+- Scale to 0 replicas outside of business hours
+- Additionally scale up to 5 replicas if there is HTTP load (more than 2 concurrent requests)
+
+You can verify the scheduling works by:
+1. Watching the replica count change at 8 AM and 6 PM local time
+2. Testing HTTP scaling during business hours using:
+```bash
+hey -c 10 -z 2m https://ca-keda-cronscaling.<your-containerapp>.<region>.azurecontainerapps.io/weatherforecast
+```
+
 
 

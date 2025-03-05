@@ -1,4 +1,4 @@
-using ServiceBusScaling.Services;
+using BlobStorageScaling.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
