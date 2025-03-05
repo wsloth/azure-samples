@@ -40,7 +40,7 @@ export CONTAINER_REGISTRY_NAME=acrkedascaling.azurecr.io
 export ENVIRONMENT_NAME=cae-keda
 export ACR_PULL_IDENTITY_NAME='acr-pull'
 
-# Deploying 01-httpscaling
+# Deploying 01-http
 ```
 Deploy the container app with the following command:
 
@@ -48,7 +48,7 @@ Deploy the container app with the following command:
 az deployment group create \
     --name httpscaling-$(date +%Y%m%d-%H%M%S) \
     --resource-group $RESOURCE_GROUP_NAME \
-    --template-file ./01-httpscaling/main.bicep \
+    --template-file ./01-http/main.bicep \
     --parameters location=$LOCATION \
         containerRegistryName=$CONTAINER_REGISTRY_NAME \
         environmentName=$ENVIRONMENT_NAME \
@@ -84,3 +84,26 @@ az deployment group create \
 ```
 
 You can verify the Service Bus scaling works by sending messages to the topic using the UI in the portal. The container app should scale based on the number of messages in the subscription. When the messages are processed, it will scale back down to 0.
+
+# Deploying 03-blobstorage
+
+First, deploy the infrastructure and container app:
+
+```bash
+az deployment group create \
+    --name blobstoragescaling-$(date +%Y%m%d-%H%M%S) \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --template-file ./03-blobstorage/main.bicep \
+    --parameters location=$LOCATION \
+        containerRegistryName=$CONTAINER_REGISTRY_NAME \
+        environmentName=$ENVIRONMENT_NAME \
+        acrPullIdentityName=$ACR_PULL_IDENTITY_NAME \
+        containerAppName='ca-keda-blobstoragescaling' \
+        dockerImageName='blobstoragescaling:latest' \
+        storageAccountName='stacakedademo'
+```
+
+You can verify the Blob Storage scaling works by uploading files to the 'samples' container in the storage account. The container app will "process" these files and delete them afterwards. When there are no more files to process, it will scale back down to 0 after a few minutes.
+
+
+
